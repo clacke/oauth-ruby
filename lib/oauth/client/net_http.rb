@@ -24,6 +24,7 @@ class Net::HTTPGenericRequest
   #           {OAuth Request Body Hash 1.0 Draft 4}[http://oauth.googlecode.com/svn/spec/ext/body_hash/1.0/drafts/4/spec.html]
   def oauth!(http, consumer = nil, token = nil, options = {})
     helper_options = oauth_helper_options(http, consumer, token, options)
+    Rails.logger.debug "#{self.class.name}##{__method__}: helper_options #{helper_options.inspect}"
     @oauth_helper = OAuth::Client::Helper.new(self, helper_options)
     @oauth_helper.amend_user_agent_header(self)
     @oauth_helper.hash_body if oauth_body_hash_required?

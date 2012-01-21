@@ -74,6 +74,9 @@ module OAuth::Client
       parameters = oauth_parameters
       parameters.merge!('oauth_signature' => signature(options.merge(:parameters => parameters)))
 
+      Rails.logger.debug "#{self.class.name}##{__method__}: oauth_parameters #{oauth_parameters.inspect}"
+      Rails.logger.debug "#{self.class.name}##{__method__}: signature #{parameters['oauth_signature']}"
+
       header_params_str = parameters.sort.map { |k,v| "#{k}=\"#{escape(v)}\"" }.join(', ')
 
       realm = "realm=\"#{options[:realm]}\", " if options[:realm]
